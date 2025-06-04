@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PageButton from "./PageButton";
 
 export default function CharactersTable() {
   interface Character {
@@ -6,7 +7,6 @@ export default function CharactersTable() {
     name: string;
     status: string;
     species: string;
-    type?: string;
     gender: string;
     origin: { name: string };
     location: { name: string; url: string };
@@ -15,28 +15,58 @@ export default function CharactersTable() {
     url: string;
     created: string;
   }
-  const [character, setCharacter] = useState<Character[]>([]);
 
+  interface PageInfo {
+    pages: number;
+    next: string | null;
+    prev: string | null;
+  }
+
+  ///////////////////// State Management /////////////////////
+  const [characters, setCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const [page, setPage] = useState<number>(1);
+  const [pageInfo, setPageInfo] = useState<PageInfo>({
+    pages: 0,
+    next: null,
+    prev: null,
+  });
+
+  /////////////////////////// Fetch Characters and set the pageInfo ///////////////////
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
         const response = await fetch(
-          "https://rickandmortyapi.com/api/character?page=1"
+          `https://rickandmortyapi.com/api/character?page=${page}`
         );
         const data = await response.json();
-        setCharacter(data.results);
+        setCharacters(data.results);
+        setPageInfo({
+          next: data.info.next,
+          prev: data.info.prev,
+          pages: data.info.pages,
+        });
       } catch (error) {
         console.error("Wubba Lubba dub-dub: ", error);
       } finally {
         setLoading(false);
       }
     };
-    console.log("Fetching characters...");
-    fetchCharacters();
-  }, []);
 
+    fetchCharacters();
+  }, [page]);
+
+  ///////////////////// Pagination Handlers /////////////////////
+  function handleNextPageChange() {
+    setPage((prev) => prev + 1);
+  }
+
+  function handlePrevPageChange() {
+    setPage((prev) => Math.max(prev - 1, 1));
+  }
+
+  ///////////////////// Loading State /////////////////////
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -47,23 +77,50 @@ export default function CharactersTable() {
     );
   }
 
+  ///////////////////// Table Structure /////////////////////
+
   return (
-    <table className="w-full h-full text-center bg-white border-2 border-black rounded-2xl">
-      <thead>
-        {character.map((character) => (
-          <tr key={character.id} className="hover:bg-gray-50 transition">
-            <th>{character.name}</th>
-            <th className="">{character.gender}</th>
-            <th className="">{character.status}</th>
-            <th className="">{character.species}</th>
-            <th className="">{character.location.name}</th>
-            {/* <th className="">{character.episode}</th> */}
+    <>
+      <table className="w-full h-4/5 text-center bg-white border-2 border-black table-auto ">
+        <thead>
+          <tr>
+            <th className="bg-stone-400">Name</th>
+            <th className="bg-stone-400">Gender</th>
+            <th className="bg-stone-400">Status</th>
+            <th className="bg-stone-400">Species</th>
+            <th className="bg-stone-400">Location</th>
+            <th className="bg-stone-400">Episodes</th>
           </tr>
-        ))}
-      </thead>
-      <tbody>
-        <tr></tr>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {characters.map((character) => (
+            <tr key={character.id} className="hover:bg-gray-300 transition">
+              <th>{character.name}</th>
+              <th>{character.gender}</th>
+              <th>{character.status}</th>
+              <th>{character.species}</th>
+              <th>{character.location.name}</th>
+              <th>{character.episode.length}</th>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* ////////////////////// Pagination Controls ///////////////////// */}
+
+      <div className="flex justify-evenly items-center h-1/5">
+        <PageButton onClick={handlePrevPageChange} disabled={!pageInfo.prev}>
+          Prev
+        </PageButton>
+
+        <p className="w-1/6 h-1/2 bg-white shadow flex items-center justify-center border-2 border-black">
+          Page {page} of {pageInfo.pages}
+        </p>
+
+        <PageButton onClick={handleNextPageChange} disabled={!pageInfo.next}>
+          Next
+        </PageButton>
+      </div>
+    </>
   );
 }
