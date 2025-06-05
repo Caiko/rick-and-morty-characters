@@ -15,7 +15,7 @@ export default function CharacterRow({
 }: Props) {
   return (
     <div className="overflow-y-scroll h-5/6 w-full">
-      <table className="w-full h-4/5 text-center bg-white  table-auto">
+      <table className="w-full h-4/5 text-start bg-white  table-auto">
         <thead className="sticky top-0 z-10">
           <tr>
             <th className="bg-stone-400 w-3/12">Name</th>
