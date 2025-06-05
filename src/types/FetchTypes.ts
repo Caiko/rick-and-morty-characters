@@ -17,3 +17,18 @@ export type PageInfo = {
   next: string | null;
   prev: string | null;
 };
+
+export type EpisodeInfo = {
+  id: number;
+  name: string;
+  air_date: string;
+  episode: string;
+  characters: string[];
+  url: string;
+  created: string;
+};
+
+export type FetchCharactersResult = {
+  characters: Character[];
+  pageInfo: PageInfo;
+};

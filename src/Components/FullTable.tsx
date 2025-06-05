@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import PageButton from "./TableComponents/PageButton";
 import type { Character, PageInfo } from "../types/FetchTypes";
 import CharacterTable from "./TableComponents/CharacterTable";
+import { fetchCharacters } from "../utils/fetchData";
 
 export default function CharactersTable() {
   const [characters, setCharacters] = useState<Character[]>([]);
@@ -20,26 +21,18 @@ export default function CharactersTable() {
 
   /////////////////////////// Fetch Characters and set the pageInfo ///////////////////
   useEffect(() => {
-    const fetchCharacters = async () => {
+    const loadCharacters = async () => {
       try {
-        const response = await fetch(
-          `https://rickandmortyapi.com/api/character?page=${page}`
-        );
-        const data = await response.json();
-        setCharacters(data.results);
-        setPageInfo({
-          next: data.info.next,
-          prev: data.info.prev,
-          pages: data.info.pages,
-        });
+        const data = await fetchCharacters(page);
+        setCharacters(data.characters);
+        setPageInfo(data.pageInfo);
       } catch (error) {
         console.error("Wubba Lubba dub-dub: ", error);
       } finally {
         setLoading(false);
       }
     };
-
-    fetchCharacters();
+    loadCharacters();
   }, [page]);
 
   ///////////////////// Pagination Handlers /////////////////////
@@ -70,7 +63,7 @@ export default function CharactersTable() {
         toggleExpand={toggleExpand}
       />
 
-      <div className="flex justify-evenly items-center h-1/5">
+      <div className="flex justify-evenly items-center h-1/6">
         <PageButton onClick={handlePrevPageChange} disabled={!pageInfo.prev}>
           Prev
         </PageButton>

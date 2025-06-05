@@ -24,3 +24,9 @@ body {
   font-family: "Open Sans", sans-serif;
   line-height: 1.6;
 }
+
+th,
+td {
+  padding: 4px;
+  border: black 1px solid;
+}
