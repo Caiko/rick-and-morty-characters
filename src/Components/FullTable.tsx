@@ -3,8 +3,9 @@ import PageButton from "./TableComponents/PageButton";
 import type { Character, PageInfo } from "../types/FetchTypes";
 import CharacterTable from "./TableComponents/CharacterTable";
 import { fetchCharacters } from "../utils/fetchData";
+import SearchBar from "./TableComponents/SearchBar";
 
-export default function CharactersTable() {
+export default function FullTable() {
   const [characters, setCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -14,6 +15,7 @@ export default function CharactersTable() {
     prev: null,
   });
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const toggleExpand = useCallback((id: number) => {
     setExpandedId((prev) => (prev === id ? null : id));
@@ -23,7 +25,7 @@ export default function CharactersTable() {
   useEffect(() => {
     const loadCharacters = async () => {
       try {
-        const data = await fetchCharacters(page);
+        const data = await fetchCharacters(page, searchTerm);
         setCharacters(data.characters);
         setPageInfo(data.pageInfo);
       } catch (error) {
@@ -33,7 +35,11 @@ export default function CharactersTable() {
       }
     };
     loadCharacters();
-  }, [page]);
+  }, [page, searchTerm]);
+
+  const filteredCharacters = characters.filter((character) =>
+    character.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   ///////////////////// Pagination Handlers /////////////////////
   function handleNextPageChange() {
@@ -57,8 +63,16 @@ export default function CharactersTable() {
 
   return (
     <>
+      <SearchBar
+        searchTerm={searchTerm}
+        setSearchTerm={(term) => {
+          setSearchTerm(term);
+          setPage(1);
+        }}
+      />
+
       <CharacterTable
-        characters={characters}
+        characters={filteredCharacters}
         isExpanded={expandedId}
         toggleExpand={toggleExpand}
       />

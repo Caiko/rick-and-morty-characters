@@ -44,7 +44,7 @@ export default function ExpandedRow({ character }: { character: Character }) {
             </div>
 
             <div className=" h-40 w-3/4   overflow-y-scroll  max-w-full ">
-              <table className="w-full table-auto text-sm ">
+              <table className="w-full table-auto text-left">
                 <thead className="bg-green-400 sticky top-0 ">
                   <tr>
                     <th className="px-2 py-1 border">Episodes</th>
@@ -55,9 +55,7 @@ export default function ExpandedRow({ character }: { character: Character }) {
                 <tbody className="bg-white ">
                   {episodes.map((ep, idx) => (
                     <tr key={ep.id}>
-                      <td className="px-2 py-1 border text-center">
-                        {idx + 1}
-                      </td>
+                      <td className="px-2 py-1 border">{idx + 1}</td>
                       <td className="px-2 py-1 border">{ep.episode}</td>
                       <td className="px-2 py-1 border">{ep.name}</td>
                     </tr>
