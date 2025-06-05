@@ -18,10 +18,10 @@ export default function ExpandedRow({ character }: { character: Character }) {
 
   return (
     <>
-      <tr className="bg-gray-100 ">
+      <tr className="bg-blue-300">
         <td colSpan={6}>
-          <div className=" flex items-center w-full justify-between ">
-            <div className="flex gap-4 text-left justify-center items-center w-1/4">
+          <div className="h-60 flex items-center w-full justify-between  ">
+            <div className="flex gap-4 text-left items-center w-1/4">
               <img
                 src={character.image}
                 alt={character.name}
@@ -43,9 +43,9 @@ export default function ExpandedRow({ character }: { character: Character }) {
               </div>
             </div>
 
-            <div className=" h-40 w-3/4   overflow-y-scroll  max-w-full ">
-              <table className="w-full table-auto text-left">
-                <thead className="bg-green-400 sticky top-0 ">
+            <div className=" h-50 w-3/4   overflow-y-scroll  max-w-full ">
+              <table className="w-full  table-auto text-left">
+                <thead className="bg-stone-400 sticky top-0 ">
                   <tr>
                     <th>Episodes</th>
                     <th>Season and Episode</th>
@@ -54,7 +54,7 @@ export default function ExpandedRow({ character }: { character: Character }) {
                 </thead>
                 <tbody className="bg-white ">
                   {episodes.map((ep, idx) => (
-                    <tr key={ep.id}>
+                    <tr key={ep.id} className="odd:bg-white even:bg-gray-200">
                       <td>{idx + 1}</td>
                       <td>{ep.episode}</td>
                       <td>{ep.name}</td>

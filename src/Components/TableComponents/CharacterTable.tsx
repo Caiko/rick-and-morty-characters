@@ -31,8 +31,10 @@ export default function CharacterRow({
             <React.Fragment key={character.id}>
               <tr
                 key={character.id}
-                className={`hover:bg-green-200 transition cursor-pointer ${
-                  isExpanded === character.id ? "bg-green-200" : ""
+                className={`hover:bg-blue-400 transition cursor-pointer ${
+                  isExpanded === character.id
+                    ? "bg-blue-400"
+                    : " odd:bg-white even:bg-gray-200"
                 }`}
                 onClick={() => toggleExpand(character.id)}
               >
