@@ -9,10 +9,10 @@ export default function SearchBar({ searchTerm, setSearchTerm }: Props) {
       <div className="w-full max-w-md">
         <input
           type="text"
-          placeholder="Search characters..."
+          placeholder="Pass the butter..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full p-2 rounded border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          onChange={(event) => setSearchTerm(event.target.value)}
+          className="w-full p-2  border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
         />
       </div>
     </div>

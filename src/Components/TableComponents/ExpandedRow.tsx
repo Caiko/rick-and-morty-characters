@@ -21,11 +21,11 @@ export default function ExpandedRow({ character }: { character: Character }) {
       <tr className="bg-gray-100 ">
         <td colSpan={6}>
           <div className=" flex items-center w-full justify-between ">
-            <div className="flex gap-4 text-left ">
+            <div className="flex gap-4 text-left justify-center items-center w-1/4">
               <img
                 src={character.image}
                 alt={character.name}
-                className="w-32 h-32 rounded-lg border"
+                className="w-32 h-32 border"
               />
               <div className="flex flex-col justify-center">
                 <p>
@@ -47,17 +47,17 @@ export default function ExpandedRow({ character }: { character: Character }) {
               <table className="w-full table-auto text-left">
                 <thead className="bg-green-400 sticky top-0 ">
                   <tr>
-                    <th className="px-2 py-1 border">Episodes</th>
-                    <th className="px-2 py-1 border">Season and Episode</th>
-                    <th className="px-2 py-1 border">Title</th>
+                    <th>Episodes</th>
+                    <th>Season and Episode</th>
+                    <th>Title</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white ">
                   {episodes.map((ep, idx) => (
                     <tr key={ep.id}>
-                      <td className="px-2 py-1 border">{idx + 1}</td>
-                      <td className="px-2 py-1 border">{ep.episode}</td>
-                      <td className="px-2 py-1 border">{ep.name}</td>
+                      <td>{idx + 1}</td>
+                      <td>{ep.episode}</td>
+                      <td>{ep.name}</td>
                     </tr>
                   ))}
                 </tbody>
