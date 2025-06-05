@@ -12,7 +12,7 @@ export default function SearchBar({ searchTerm, setSearchTerm }: Props) {
           placeholder="Pass the butter..."
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
-          className="w-full p-2  border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+          className="w-full p-2  border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </div>
     </div>
