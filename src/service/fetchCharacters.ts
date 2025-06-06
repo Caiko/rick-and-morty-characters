@@ -1,4 +1,4 @@
-import type { FetchCharactersResult, EpisodeInfo } from "../types/FetchTypes";
+import type { FetchCharactersResult } from "../types/FetchTypes";
 
 export const fetchCharacters = async (
   page: number,
@@ -21,18 +21,4 @@ export const fetchCharacters = async (
       pages: data.info.pages,
     },
   };
-};
-
-export const fetchEpisodes = async (
-  episodeUrls: string[]
-): Promise<EpisodeInfo[]> => {
-  const requests = episodeUrls.map((url) =>
-    fetch(url).then((res) => {
-      if (!res.ok)
-        throw new Error(`We have a problem with this one --> ${url}`);
-      return res.json();
-    })
-  );
-
-  return Promise.all(requests);
 };

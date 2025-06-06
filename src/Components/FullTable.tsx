@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import PageButton from "./TableComponents/PageButton";
 import type { Character, PageInfo } from "../types/FetchTypes";
 import CharacterTable from "./TableComponents/CharacterTable";
-import { fetchCharacters } from "../utils/fetchData";
+import { fetchCharacters } from "../service/fetchCharacters";
 import SearchBar from "./TableComponents/SearchBar";
 
 export default function FullTable() {

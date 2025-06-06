@@ -1,8 +1,8 @@
-interface PageButtonProps {
+type PageButtonProps = {
   disabled: boolean;
   onClick: () => void;
   children: React.ReactNode;
-}
+};
 
 export default function PageButton({
   disabled,

@@ -28,6 +28,7 @@ export default function CharacterRow({
         </thead>
         <tbody>
           {characters.map((character) => (
+            // does't let me use an empty fragment here, so I use React.Fragment
             <React.Fragment key={character.id}>
               <tr
                 key={character.id}
