@@ -8,7 +8,10 @@ export default function FullTable() {
   const [page, setPage] = useState(1);
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const { data, isLoading, isError, error } = useCharacters(page, searchTerm);
+  const { data, isLoading, isError, error, isPlaceholderData } = useCharacters(
+    page,
+    searchTerm
+  );
 
   const toggleExpand = useCallback((id: number) => {
     setExpandedId((prev) => (prev === id ? null : id));
@@ -71,7 +74,7 @@ export default function FullTable() {
         </PageButton>
 
         <p className="w-1/6 h-1/2 bg-white shadow flex items-center justify-center border-2 border-black">
-          Page {page} of {data.pageInfo.pages}
+          Page {isPlaceholderData ? page - 1 : page} of {data.pageInfo.pages}
         </p>
 
         <PageButton
