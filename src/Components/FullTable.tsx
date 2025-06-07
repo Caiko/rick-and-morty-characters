@@ -1,57 +1,40 @@
-import { useEffect, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import PageButton from "./TableComponents/PageButton";
-import type { Character, PageInfo } from "../types/FetchTypes";
 import CharacterTable from "./TableComponents/CharacterTable";
-import { fetchCharacters } from "../service/fetchCharacters";
+import { useCharacters } from "../hooks/useCharacters";
 import SearchBar from "./TableComponents/SearchBar";
 
 export default function FullTable() {
-  const [characters, setCharacters] = useState<Character[]>([]);
-  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [pageInfo, setPageInfo] = useState<PageInfo>({
-    pages: 0,
-    next: null,
-    prev: null,
-  });
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const { data, isLoading, isError, error } = useCharacters(page, searchTerm);
 
   const toggleExpand = useCallback((id: number) => {
     setExpandedId((prev) => (prev === id ? null : id));
   }, []);
 
-  /////////////////////////// Fetch Characters and set the pageInfo ///////////////////
-  useEffect(() => {
-    const loadCharacters = async () => {
-      try {
-        const data = await fetchCharacters(page, searchTerm);
-        setCharacters(data.characters);
-        setPageInfo(data.pageInfo);
-      } catch (error) {
-        console.error("Wubba Lubba dub-dub: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadCharacters();
-  }, [page, searchTerm]);
-
-  const filteredCharacters = characters.filter((character) =>
-    character.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredCharacters = characters.filter((character) =>
+  //   character.name.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
+  // No need to manually filter characters here, as the API already supports searching by name.
 
   ///////////////////// Pagination Handlers /////////////////////
-  function handleNextPageChange() {
+  const handleNextPageChange = useCallback(() => {
     setPage((prev) => prev + 1);
-  }
+  }, []);
 
-  function handlePrevPageChange() {
+  const handlePrevPageChange = useCallback(() => {
     setPage((prev) => Math.max(prev - 1, 1));
-  }
+  }, []);
+
+  const handleSearchChange = useCallback((term: string) => {
+    setSearchTerm(term);
+    setPage(1);
+  }, []);
 
   ///////////////////// Loading State /////////////////////
-  if (loading) {
+  if (isLoading || !data) {
     return (
       <div className="flex items-center justify-center h-full">
         <p className="text-5xl">
@@ -61,32 +44,40 @@ export default function FullTable() {
     );
   }
 
+  if (isError) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <p className="text-xl">Opps... {(error as Error).message}</p>
+      </div>
+    );
+  }
+
   return (
     <>
-      <SearchBar
-        searchTerm={searchTerm}
-        setSearchTerm={(term) => {
-          setSearchTerm(term);
-          setPage(1);
-        }}
-      />
+      <SearchBar searchTerm={searchTerm} setSearchTerm={handleSearchChange} />
 
       <CharacterTable
-        characters={filteredCharacters}
+        characters={data.characters}
         isExpanded={expandedId}
         toggleExpand={toggleExpand}
       />
 
       <div className="flex justify-evenly items-center h-1/6">
-        <PageButton onClick={handlePrevPageChange} disabled={!pageInfo.prev}>
+        <PageButton
+          onClick={handlePrevPageChange}
+          disabled={!data.pageInfo.prev}
+        >
           Prev
         </PageButton>
 
         <p className="w-1/6 h-1/2 bg-white shadow flex items-center justify-center border-2 border-black">
-          Page {page} of {pageInfo.pages}
+          Page {page} of {data.pageInfo.pages}
         </p>
 
-        <PageButton onClick={handleNextPageChange} disabled={!pageInfo.next}>
+        <PageButton
+          onClick={handleNextPageChange}
+          disabled={!data.pageInfo.next}
+        >
           Next
         </PageButton>
       </div>
