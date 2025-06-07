@@ -3,26 +3,29 @@ import PageButton from "./TableComponents/PageButton";
 import CharacterTable from "./TableComponents/CharacterTable";
 import { useCharacters } from "../hooks/useCharacters";
 import SearchBar from "./TableComponents/SearchBar";
+import FilterSelect from "./TableComponents/FilterSelect";
 
 export default function FullTable() {
   const [page, setPage] = useState(1);
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [filters, setFilters] = useState({
+    status: "",
+    gender: "",
+    species: "",
+  });
+
   const { data, isLoading, isError, error, isPlaceholderData } = useCharacters(
     page,
-    searchTerm
+    searchTerm,
+    filters
   );
 
   const toggleExpand = useCallback((id: number) => {
     setExpandedId((prev) => (prev === id ? null : id));
   }, []);
 
-  // const filteredCharacters = characters.filter((character) =>
-  //   character.name.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
-  // No need to manually filter characters here, as the API already supports searching by name.
-
-  ///////////////////// Pagination Handlers /////////////////////
+  ///////////////////// Pagination and Filter Handlers /////////////////////
   const handleNextPageChange = useCallback(() => {
     setPage((prev) => prev + 1);
   }, []);
@@ -34,6 +37,13 @@ export default function FullTable() {
   const handleSearchChange = useCallback((term: string) => {
     setSearchTerm(term);
     setPage(1);
+  }, []);
+
+  const handleFilterChange = useCallback((key: string, value: string) => {
+    setFilters((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
   }, []);
 
   ///////////////////// Loading State /////////////////////
@@ -57,7 +67,30 @@ export default function FullTable() {
 
   return (
     <>
-      <SearchBar searchTerm={searchTerm} setSearchTerm={handleSearchChange} />
+      <div className="flex gap-10 bg-stone-400 p-4">
+        <FilterSelect
+          value={filters.status}
+          label="Status"
+          onChange={(value) => handleFilterChange("status", value)}
+          options={["Alive", "Dead", "unknown"]}
+        />
+
+        <FilterSelect
+          value={filters.gender}
+          label="Gender"
+          onChange={(value) => handleFilterChange("gender", value)}
+          options={["Male", "Female", "Genderless", "unknown"]}
+        />
+
+        <FilterSelect
+          value={filters.species}
+          label="Species"
+          onChange={(value) => handleFilterChange("species", value)}
+          options={["Human", "Alien", "Robot", "Mythological", "Poopybutthole"]}
+        />
+
+        <SearchBar searchTerm={searchTerm} setSearchTerm={handleSearchChange} />
+      </div>
 
       <CharacterTable
         characters={data.characters}
@@ -73,9 +106,9 @@ export default function FullTable() {
           Prev
         </PageButton>
 
-        <p className="w-1/6 h-1/2 bg-white shadow flex items-center justify-center border-2 border-black">
+        <span className="w-1/6 h-1/2 bg-white shadow flex items-center justify-center border border-black">
           Page {isPlaceholderData ? page - 1 : page} of {data.pageInfo.pages}
-        </p>
+        </span>
 
         <PageButton
           onClick={handleNextPageChange}

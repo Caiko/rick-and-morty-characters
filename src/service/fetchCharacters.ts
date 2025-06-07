@@ -2,11 +2,17 @@ import type { FetchCharactersResult } from "../types/FetchTypes";
 
 export const fetchCharacters = async (
   page: number,
+  filters: { status: string; gender: string; species: string },
   searchTerm?: string
 ): Promise<FetchCharactersResult> => {
   const query = `
-    query ($page: Int, $name: String) {
-      characters(page: $page, filter: { name: $name }) {
+    query ($page: Int, $name: String, $status: String, $species: String, $gender: String) {
+      characters(page: $page, filter: {
+        name: $name,
+        status: $status,
+        species: $species,
+        gender: $gender
+        }) {
         info {
           next
           prev
@@ -36,8 +42,11 @@ export const fetchCharacters = async (
     }
   `;
   const variables = {
-    page: page,
-    name: searchTerm ?? "",
+    page,
+    name: searchTerm || undefined,
+    status: filters.status || undefined,
+    gender: filters.gender || undefined,
+    species: filters.species || undefined,
   };
 
   const response = await fetch("https://rickandmortyapi.com/graphql", {

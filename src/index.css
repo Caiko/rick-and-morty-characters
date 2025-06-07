@@ -1,10 +1,5 @@
 @import "tailwindcss";
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
 *,
 *::before,
 *::after {
@@ -27,6 +22,5 @@ body {
 
 th,
 td {
-  padding: 4px;
-  border: black 1px solid;
+  padding: 6px;
 }

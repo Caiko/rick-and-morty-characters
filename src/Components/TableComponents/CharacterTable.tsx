@@ -15,8 +15,8 @@ export default function CharacterRow({
 }: Props) {
   return (
     <div className="overflow-y-scroll h-5/6 w-full">
-      <table className="w-full h-4/5 text-start bg-white  table-auto">
-        <thead className="sticky top-0 z-10">
+      <table className="w-full h-4/5 text-left bg-white table-auto">
+        <thead className="sticky top-0 z-10 ">
           <tr>
             <th className="bg-stone-400 w-3/12">Name</th>
             <th className="bg-stone-400 w-1/12">Gender</th>
@@ -39,7 +39,18 @@ export default function CharacterRow({
                 }`}
                 onClick={() => toggleExpand(character.id)}
               >
-                <td>{character.name}</td>
+                <td className="flex items-center gap-2">
+                  <span
+                    className={`w-3 h-3 rounded-full ${
+                      character.status === "Alive"
+                        ? "bg-green-500"
+                        : character.status === "Dead"
+                        ? "bg-red-500"
+                        : "bg-gray-400"
+                    }`}
+                  ></span>
+                  {character.name}
+                </td>
                 <td>{character.gender}</td>
                 <td>{character.status}</td>
                 <td>{character.species}</td>
