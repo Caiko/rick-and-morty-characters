@@ -1,20 +1,8 @@
-import { useEffect, useState } from "react";
-import type { Character, EpisodeInfo } from "../../types/FetchTypes";
-import { fetchEpisodes } from "../../service/fetchEpisodes";
+import type { Character } from "../../types/FetchTypes";
+import { useEpisodes } from "../../hooks/useEpisodes";
 
 export default function ExpandedRow({ character }: { character: Character }) {
-  const [episodes, setEpisodes] = useState<EpisodeInfo[]>([]);
-  useEffect(() => {
-    const loadEpisodes = async () => {
-      try {
-        const data = await fetchEpisodes(character.episode);
-        setEpisodes(data);
-      } catch (error) {
-        console.error("Error fetching episodes:", error);
-      }
-    };
-    loadEpisodes();
-  }, [character.episode]);
+  const { data: episodes = [] } = useEpisodes(character.episode);
 
   return (
     <tr className="bg-blue-300">
