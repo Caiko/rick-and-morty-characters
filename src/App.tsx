@@ -1,4 +1,4 @@
-import FullTable from "./Components/FullTable";
+import FullTable from "./components/FullTable";
 
 function App() {
   return (
