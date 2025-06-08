@@ -1,54 +1,66 @@
-# React + TypeScript + Vite
+# 🧪 Rick & Morty Characters - Character Browser App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[Check it out](https://caiko.github.io/rick-and-morty-characters/) <-----------
 
-Currently, two official plugins are available:
+## 📚 Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Rick & Morty Characters** is a **React-based web application** that lets users **search, browse, and expand character profiles** from the [Rick and Morty API](https://rickandmortyapi.com). This app delivers a table view of characters, expandable rows for deeper insights, and pagination. If you are a fan you can easily dive into details like **origin, species, and episode appearances** — all wrapped in a responsive and scrollable UI.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Features
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- 🔍 **Search Bar** – Live name-based filtering of characters.
+- 📃 **Expandable Table Rows** – Click to reveal character images and episode data.
+- 📺 **Episode Fetching** – Auto-fetches episode titles and codes for each character.
+- 📜 **Pagination** –  Browse across multiple pages.
+- 🎨 **Tailwind Styling** – Responsive UI.
+
+---
+
+## 💻 Technologies Used
+
+- **React 19**
+- **TypeScript**
+- **Tailwind CSS**
+- **Rick and Morty API**
+- **Fetch API**
+- **Vite / React Scripts**
+
+---
+
+## 📸 Project Preview
+
+![image](https://github.com/user-attachments/assets/18ca61e8-5d4f-4b35-8e4c-44a41be0397d)
+![image](https://github.com/user-attachments/assets/40b9f393-e52b-45ad-8d03-f17a6eb7d1b6)
+
+
+---
+
+## 📂 Project Structure
+
+```
+rick-and-morty-explorer/
+├── Components/
+│   ├── FullTable.tsx              # Main component with table, pagination, search
+│   ├── TableComponents/
+│   │   ├── CharacterTable.tsx     # Renders table rows
+│   │   ├── CharacterRow.tsx       # Individual row + expand logic
+│   │   ├── ExpandedRow.tsx        # Detailed character and episodes view
+│   │   ├── PageButton.tsx         # Pagination buttons
+│   │   └── SearchBar.tsx          # Search input
+├── service/
+│   ├── fetchCharacters.ts         # Fetches character data from API
+│   ├── fetchEpisodes.ts           # Batch fetches episodes
+├── types/
+│   └── FetchTypes.ts              # Type definitions for API responses
+├── App.tsx                        # Root component
+├── main.tsx                       # Entry point
+├── index.css                      # Tailwind base
+├── vite.config.ts                 # Vite configuration
+└── README.md                      # Project documentation
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
