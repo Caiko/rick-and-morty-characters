@@ -2,7 +2,22 @@ import type { Character } from "../../types/FetchTypes";
 import { useEpisodes } from "../../hooks/useEpisodes";
 
 export default function ExpandedRow({ character }: { character: Character }) {
-  const { data: episodes = [] } = useEpisodes(character.episode);
+  const {
+    data: episodes = [],
+    isError,
+    error,
+    isLoading,
+  } = useEpisodes(character.episode);
+
+  if (isError) {
+    return (
+      <tr className="bg-red-100">
+        <td colSpan={6} className="text-xl">
+          Opps... {(error as Error).message}
+        </td>
+      </tr>
+    );
+  }
 
   return (
     <tr className="bg-blue-300">
@@ -40,6 +55,13 @@ export default function ExpandedRow({ character }: { character: Character }) {
                 </tr>
               </thead>
               <tbody className="bg-white ">
+                {isLoading && (
+                  <tr className="text-center">
+                    <td colSpan={3}>
+                      One screw turn... aand two screw turns... aaand...
+                    </td>
+                  </tr>
+                )}
                 {episodes.map((ep, idx) => (
                   <tr key={ep.id} className="odd:bg-white even:bg-gray-200">
                     <td>{idx + 1}</td>

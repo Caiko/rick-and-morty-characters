@@ -48,13 +48,7 @@ export default function FullTable() {
 
   ///////////////////// Loading State /////////////////////
   if (isLoading || !data) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <p className="text-5xl">
-          One screw turn... aand two screw turns... aaand...
-        </p>
-      </div>
-    );
+    return <p className="text-2xl text-center pt-24">Waaait for it...</p>;
   }
 
   if (isError) {
@@ -67,27 +61,35 @@ export default function FullTable() {
 
   return (
     <>
-      <div className="flex gap-10 bg-stone-400 p-4 items-center h-f">
-        <FilterSelect
-          value={filters.status}
-          label="Status"
-          onChange={(value) => handleFilterChange("status", value)}
-          options={["Alive", "Dead", "unknown"]}
-        />
+      <div className="flex gap-10 bg-stone-400 p-2 items-end">
+        <div className="flex gap-4">
+          <FilterSelect
+            value={filters.status}
+            label="Status"
+            onChange={(value) => handleFilterChange("status", value)}
+            options={["Alive", "Dead", "unknown"]}
+          />
 
-        <FilterSelect
-          value={filters.gender}
-          label="Gender"
-          onChange={(value) => handleFilterChange("gender", value)}
-          options={["Male", "Female", "Genderless", "unknown"]}
-        />
+          <FilterSelect
+            value={filters.gender}
+            label="Gender"
+            onChange={(value) => handleFilterChange("gender", value)}
+            options={["Male", "Female", "Genderless", "unknown"]}
+          />
 
-        <FilterSelect
-          value={filters.species}
-          label="Species"
-          onChange={(value) => handleFilterChange("species", value)}
-          options={["Human", "Alien", "Robot", "Mythological", "Poopybutthole"]}
-        />
+          <FilterSelect
+            value={filters.species}
+            label="Species"
+            onChange={(value) => handleFilterChange("species", value)}
+            options={[
+              "Human",
+              "Alien",
+              "Robot",
+              "Mythological",
+              "Poopybutthole",
+            ]}
+          />
+        </div>
 
         <SearchBar searchTerm={searchTerm} setSearchTerm={handleSearchChange} />
       </div>
@@ -98,7 +100,7 @@ export default function FullTable() {
         toggleExpand={toggleExpand}
       />
 
-      <div className="flex justify-evenly items-center h-1/6">
+      <div className="flex justify-evenly items-end h-1/12 mt-4">
         <PageButton
           onClick={handlePrevPageChange}
           disabled={!data.pageInfo.prev}
@@ -106,7 +108,7 @@ export default function FullTable() {
           Prev
         </PageButton>
 
-        <span className="w-1/6 h-1/2 bg-white shadow flex items-center justify-center border border-black">
+        <span className="w-1/6 h-[2.5rem] bg-white shadow flex items-center justify-center border border-black">
           Page {isPlaceholderData ? page - 1 : page} of {data.pageInfo.pages}
         </span>
 
