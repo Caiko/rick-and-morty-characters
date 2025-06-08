@@ -67,7 +67,7 @@ export default function FullTable() {
 
   return (
     <>
-      <div className="flex gap-10 bg-stone-400 p-4">
+      <div className="flex gap-10 bg-stone-400 p-4 items-center h-f">
         <FilterSelect
           value={filters.status}
           label="Status"
