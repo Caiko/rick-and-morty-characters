@@ -44,6 +44,7 @@ export default function FullTable() {
       ...prev,
       [key]: value,
     }));
+    setPage(1);
   }, []);
 
   ///////////////////// Loading State /////////////////////
