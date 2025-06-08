@@ -4,7 +4,7 @@
 
 ## 📚 Overview
 
-**Rick & Morty Characters** is a **React-based web application** that lets users **search, browse, and expand character profiles** from the [Rick and Morty API](https://rickandmortyapi.com). This app delivers a table view of characters, expandable rows for deeper insights, and pagination. If you are a fan you can easily dive into details like **origin, species, and episode appearances** — all wrapped in a responsive and scrollable UI.
+**Rick & Morty Characters** is a **React-based web application** that lets users **search, browse, and expand character profiles** from the [Rick and Morty API](https://rickandmortyapi.com). This app delivers a table view of characters, expandable rows for deeper insights, and pagination. If you are a fan you can easily dive into details like **origin, species, and episode appearances**.
 
 ---
 
