@@ -10,11 +10,14 @@
 
 ## 🚀 Features
 
-- 🔍 **Search Bar** – Live name-based filtering of characters.
-- 📃 **Expandable Table Rows** – Click to reveal character images and episode data.
-- 📺 **Episode Fetching** – Auto-fetches episode titles and codes for each character.
-- 📜 **Pagination** –  Browse across multiple pages.
-- 🎨 **Tailwind Styling** – Responsive UI.
+-  **Live Search** – Instantly filter characters by name.
+-  **Dynamic Filters** – Filter by species, gender, and status.
+-  **Expandable Character Rows** – View full details and episode lists.
+-  **Episode Integration** – GraphQL-powered episode data fetching.
+-  **TanStack/React Query Integration** – Smooth and cached API handling.
+-  **Pagination** – Load more characters across pages.
+-  **Tailwind Styling** – Clean, responsive design.
+-  **GraphQL API** – Modern and efficient data fetching.
 
 ---
 
@@ -22,17 +25,19 @@
 
 - **React 19**
 - **TypeScript**
+- **GraphQL (Rick and Morty API)**
+- **React Query (TanStack)**
 - **Tailwind CSS**
-- **Rick and Morty API**
-- **Fetch API**
-- **Vite / React Scripts**
+- **Vite**
+- **React Icons**
 
 ---
 
 ## 📸 Project Preview
 
-![image](https://github.com/user-attachments/assets/18ca61e8-5d4f-4b35-8e4c-44a41be0397d)
-![image](https://github.com/user-attachments/assets/40b9f393-e52b-45ad-8d03-f17a6eb7d1b6)
+![image](https://github.com/user-attachments/assets/b61c72d8-19e6-414e-86eb-143c2fc810b0)
+![image](https://github.com/user-attachments/assets/016b4eba-fe77-47e2-9cd5-0f4623c6aa7f)
+
 
 
 ---
@@ -40,25 +45,27 @@
 ## 📂 Project Structure
 
 ```
-rick-and-morty-explorer/
-├── Components/
-│   ├── FullTable.tsx              # Main component with table, pagination, search
+src/
+├── components/
 │   ├── TableComponents/
-│   │   ├── CharacterTable.tsx     # Renders table rows
-│   │   ├── CharacterRow.tsx       # Individual row + expand logic
-│   │   ├── ExpandedRow.tsx        # Detailed character and episodes view
-│   │   ├── PageButton.tsx         # Pagination buttons
-│   │   └── SearchBar.tsx          # Search input
+│   │   ├── CharacterTable.tsx
+│   │   ├── ExpandedRow.tsx
+│   │   ├── FilterSelect.tsx
+│   │   ├── PageButton.tsx
+│   │   └── SearchBar.tsx
+│   └── FullTable.tsx
+├── hooks/
+│   ├── useCharacters.ts
+│   └── useEpisodes.ts
 ├── service/
-│   ├── fetchCharacters.ts         # Fetches character data from API
-│   ├── fetchEpisodes.ts           # Batch fetches episodes
+│   ├── fetchCharacters.ts
+│   └── fetchEpisodes.ts
 ├── types/
-│   └── FetchTypes.ts              # Type definitions for API responses
-├── App.tsx                        # Root component
-├── main.tsx                       # Entry point
-├── index.css                      # Tailwind base
-├── vite.config.ts                 # Vite configuration
-└── README.md                      # Project documentation
+│   └── FetchTypes.ts
+├── App.tsx
+├── index.css
+├── main.tsx
+└── vite-env.d.ts
 ```
 
 ---
